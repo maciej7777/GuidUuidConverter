@@ -1,4 +1,4 @@
-package test;
+package test.com.uniejewski;
 
 import main.com.uniejewski.GuidUuidConverter;
 import org.testng.annotations.DataProvider;

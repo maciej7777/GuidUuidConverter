@@ -1,2 +1,2 @@
 # GuidUuidConverter
-Converts GUID to UUID and UUID to GUID
+UUID and GUID are data types commonly used when storing data with unique key. Both variants are used in the DBs and sometimes different sources can return you value in different format. This project provides conversion of GUID to UUID and the in the opposite way to make this operation easier for all users. Feel free to use it when investigating your database data or for other needs (see attached license).
