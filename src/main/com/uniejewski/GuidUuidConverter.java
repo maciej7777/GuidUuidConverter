@@ -1,8 +1,45 @@
 package main.com.uniejewski;
 
+import java.util.Optional;
+import java.util.regex.Pattern;
+
 public class GuidUuidConverter {
 
-    public static String convertGuidToUuid(String guid) {
+    private static final Pattern UUID_PATTERN = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
+    private static final Pattern GUID_PATTERN = Pattern.compile("[0-9A-F]{32}$");
+
+
+    private GuidUuidConverter() {
+
+    }
+
+    public static boolean isUuidValid(String uuid) {
+        if (uuid == null) {
+            return false;
+        }
+        return UUID_PATTERN.matcher(uuid).matches();
+    }
+
+    public static boolean isGuidValid(String guid) {
+        if (guid == null) {
+            return false;
+        }
+        return GUID_PATTERN.matcher(guid).matches();
+    }
+
+    public static Optional<String> tryToConvertGuidToUuid(String guid) {
+        return Optional.ofNullable(guid)
+                .filter(GuidUuidConverter::isGuidValid)
+                .map(GuidUuidConverter::convertGuidToUuid);
+    }
+
+    public static Optional<String> tryToConvertUuidToGuid(String uuid) {
+        return Optional.ofNullable(uuid)
+                .filter(GuidUuidConverter::isUuidValid)
+                .map(GuidUuidConverter::convertUuidToGuid);
+    }
+
+    private static String convertGuidToUuid(String guid) {
         StringBuilder uuidBuilder = new StringBuilder(guid);
         uuidBuilder.insert(8, "-");
         uuidBuilder.insert(13, "-");
@@ -12,7 +49,7 @@ public class GuidUuidConverter {
         return uuidBuilder.toString().toLowerCase();
     }
 
-    public static String convertUuidToGuid(String uuid) {
+    private static String convertUuidToGuid(String uuid) {
         return uuid.replace("-", "").toUpperCase();
     }
 }
